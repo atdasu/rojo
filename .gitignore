@@ -1,0 +1,18 @@
+# Wally output.
+/Packages/
+/ServerPackages/
+
+# Generated output and local secrets.
+/build/
+/sourcemap.json
+/globalTypes.d.luau
+/roblox.yml
+.env
+.env.*
+!.env.example
+
+*.rbxlx
+*.rbxl
+*.rbxm
+*.rbxl.lock
+*.rbxlx.lock

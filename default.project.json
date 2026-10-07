@@ -1,0 +1,49 @@
+{
+  "name": "StarterGame",
+  "tree": {
+    "$className": "DataModel",
+    "$ignoreUnknownInstances": true,
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "$ignoreUnknownInstances": true,
+      "Shared": {
+        "$path": "src/shared"
+      },
+      "InternalLibraries": {
+        "$path": "libraries"
+      },
+      "Packages": {
+        "$className": "Folder",
+        "$ignoreUnknownInstances": false,
+        "$path": { "optional": "Packages" }
+      }
+    },
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "$ignoreUnknownInstances": true,
+      "Server": {
+        "$path": "src/server"
+      }
+    },
+    "ServerStorage": {
+      "$className": "ServerStorage",
+      "$ignoreUnknownInstances": true,
+      "ServerPackages": {
+        "$className": "Folder",
+        "$ignoreUnknownInstances": false,
+        "$path": { "optional": "ServerPackages" }
+      }
+    },
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+      "$ignoreUnknownInstances": true,
+      "StarterPlayerScripts": {
+        "$className": "StarterPlayerScripts",
+        "$ignoreUnknownInstances": true,
+        "Client": {
+          "$path": "src/client"
+        }
+      }
+    }
+  }
+}

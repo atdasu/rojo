@@ -1,0 +1,14 @@
+version: 2
+
+# Dependabot has no Rokit or Wally support: update rokit.toml and wally.toml by
+# hand (see docs/dependency-management.md).
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: ci

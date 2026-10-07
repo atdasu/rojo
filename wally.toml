@@ -1,0 +1,13 @@
+[package]
+name = "starter/starter-game"
+description = "A private Roblox game built with Luau and Rojo."
+version = "0.1.0"
+realm = "shared"
+private = true
+registry = "https://github.com/UpliftGames/wally-index"
+
+[dependencies]
+Vide = "centau/vide@0.4.1"
+UILabs = "pepeeltoro41/ui-labs@2.4.2"
+
+[server-dependencies]

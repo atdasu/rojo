@@ -1,0 +1,5 @@
+std = "roblox"
+
+[lints]
+# Vide passes properties and children in one table.
+mixed_table = "allow"
