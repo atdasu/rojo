@@ -12,7 +12,7 @@ Vide UI kit, agent instructions and GitHub Actions. For the roblox-ts version se
 ## Use this template
 
 1. Click **Use this template** on GitHub and create your repository.
-2. Rename `StarterGame` in `default.project.json` and `src/shared/constants.luau`,
+2. Put your own name in `LICENSE` and replace `CONTRIBUTING.md`. Rename `StarterGame` in `default.project.json` and `src/shared/constants.luau`,
    and `starter/starter-game` in `wally.toml`. Update the title and badge above.
 3. Follow [After creating a repository](docs/repository-setup.md) to turn on branch
    protection and the security features, which a template does not copy.
@@ -139,3 +139,8 @@ point to. Fill them in as the game takes shape and keep `AGENTS.md` short.
   `v1.0.0`. It checks, builds, and attaches the place file to a GitHub release.
 - **Dependabot** keeps the GitHub Actions up to date. It cannot read `rokit.toml` or
   `wally.toml`; update those by hand.
+
+## License
+
+[MIT](LICENSE). This template does not accept contributions; see
+[CONTRIBUTING.md](CONTRIBUTING.md). Fork it freely.
