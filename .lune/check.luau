@@ -1,4 +1,5 @@
 -- Checks formatting, lints, type-checks, and runs the offline tests.
+-- Pass step names to run a subset: `lune run check format lint types`.
 local fs = require("@lune/fs")
 local net = require("@lune/net")
 local process = require("@lune/process")
@@ -27,8 +28,19 @@ local function ensureDefinitions()
 	fs.writeFile(DEFINITIONS, response.body)
 end
 
-ensureDefinitions()
-project.sourcemap()
+local selected = {}
+for _, name in process.args do
+	selected[name] = true
+end
+
+local function wanted(name: string): boolean
+	return #process.args == 0 or selected[name] == true
+end
+
+if wanted("types") then
+	ensureDefinitions()
+	project.sourcemap()
+end
 
 local analyze = {
 	"analyze",
@@ -48,8 +60,19 @@ local steps = {
 }
 
 local failed = {}
+local known = {}
 for _, step in steps do
-	if not project.run(step.program, step.args) then
+	known[step.name] = true
+end
+for name in selected do
+	if not known[name] then
+		print(`Unknown check: {name}`)
+		process.exit(1)
+	end
+end
+
+for _, step in steps do
+	if wanted(step.name) and not project.run(step.program, step.args) then
 		table.insert(failed, step.name)
 	end
 end

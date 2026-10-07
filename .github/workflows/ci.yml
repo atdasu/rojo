@@ -1,5 +1,8 @@
 name: CI
 
+# Actions are pinned to commit SHAs (Dependabot keeps them current) and the
+# token is read-only. `check` is the single required status: it passes only when
+# every other job passed, so jobs can be added without touching branch rules.
 on:
   push:
     branches: [main]
@@ -14,8 +17,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check:
-    name: check
+  lint:
+    name: lint
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -28,8 +31,36 @@ jobs:
       - name: Install Wally packages
         run: lune run install
 
-      - name: Format, lint, type-check and test
-        run: lune run check
+      - name: Check formatting, lint and types
+        run: lune run check format lint types
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: CompeyDev/setup-rokit@1d9390883f7ebce19d48f5b8d006e11d387c92ab # v0.2.1
+
+      - name: Run offline tests
+        run: lune run test
+
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: CompeyDev/setup-rokit@1d9390883f7ebce19d48f5b8d006e11d387c92ab # v0.2.1
+
+      - name: Install Wally packages
+        run: lune run install
 
       - name: Build place
         run: lune run build
@@ -40,3 +71,19 @@ jobs:
           path: build/*.rbxl
           if-no-files-found: error
           retention-days: 14
+
+  check:
+    name: check
+    if: always()
+    needs: [lint, test, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require every job to pass
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "Job results: $RESULTS"
+          for result in $RESULTS; do
+            if [ "$result" != "success" ]; then exit 1; fi
+          done
